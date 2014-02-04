@@ -5,4 +5,13 @@ class Cons
     @car = car
     @cdr = cdr
   end
+
+  def arrayify
+    return self unless list?
+    return [car] + cdr.arrayify
+  end
+
+  def list?
+    cdr.list?
+  end
 end
