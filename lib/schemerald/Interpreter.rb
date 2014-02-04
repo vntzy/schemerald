@@ -9,8 +9,10 @@ class Interpreter
     :cons => lambda {|x, y| Cons.new(x, y) },
     :list => lambda {|*args| args.consify },
   }
+  FORMS = {}
   def initialize
     @environment = Environment.new(nil, DEFAULTS)
+    @special_forms = Environment.new(nil, FORMS)
   end
 
   def read
