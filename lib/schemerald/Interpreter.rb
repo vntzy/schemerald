@@ -15,15 +15,15 @@ class Interpreter
     @special_forms = Environment.new(nil, FORMS)
   end
 
-  def read
-  end
-
-  def evaluate
-  end
-
-  def print
+  def evaluate(string)
+    SXP.parse(string).consify.scheme_eval(@environment, @special_forms)
   end
 
   def repl
+    print "> "
+    STDIN.each_line do |line|
+      puts self.evaluate(line)
+      print "> "
+    end
   end
 end
