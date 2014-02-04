@@ -10,6 +10,10 @@ class Object
   def list?
     false
   end
+
+  def scheme_eval(environment)
+    self
+  end
 end
 
 class Symbol
@@ -19,6 +23,10 @@ class Symbol
 
   def list?
     self == :nil
+  end
+
+  def scheme_eval(environment)
+    environment.get_value(self)
   end
 end
 
