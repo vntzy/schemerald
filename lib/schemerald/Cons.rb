@@ -15,7 +15,8 @@ class Cons
     cdr.list?
   end
 
-  def scheme_eval(environment)
+  def scheme_eval(environment, forms)
+    return forms.get_value(car).call(environment, forms, *cdr.arrayify) if forms.defined?(car)
     return car.scheme_eval(environment).call(*cdr.arrayify.map{|x| x.scheme_eval(environment)})
   end
 end

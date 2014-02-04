@@ -11,7 +11,7 @@ class Object
     false
   end
 
-  def scheme_eval(environment)
+  def scheme_eval(environment, forms)
     self
   end
 end
@@ -25,7 +25,7 @@ class Symbol
     self == :nil
   end
 
-  def scheme_eval(environment)
+  def scheme_eval(environment, forms)
     environment.get_value(self)
   end
 end
