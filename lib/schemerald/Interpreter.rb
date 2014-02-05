@@ -7,7 +7,23 @@ class Interpreter
     :+ => lambda {|*args| args.reduce(:+) },
     :- => lambda {|*args| args.reduce(:-) },
     :* => lambda {|*args| args.reduce(:*) },
-    :/ => lambda {|*args| args.reduce(:/) },
+    :/ => lambda {|*args|
+      if args.reduce(:/) == args.reduce(:fdiv) or args.reduce(:/).class == Float
+        args.reduce(:/)
+      else
+        args.map{|x| x.to_r }.reduce(:/)
+      end
+    },
+    :quotient => lambda {|x, y| x / y },
+    :remainder => lambda {|x, y| x.remainder(y) },
+    :abs => lambda {|x| x.abs },
+    :positive? => lambda {|x| x > 0 ? :"#t" : :"#f" },
+    :negative? => lambda {|x| x < 0 ? :"#t" : :"#f" },
+    :zero? => lambda {|x| x == 0 ? :"#t" : :"#f" },
+    :odd? => lambda {|x| x.odd? ? :"#t" : :"#f" },
+    :even? => lambda {|x| x.even? ? :"#t" : :"#f" },
+    :max => lambda {|*args| args.max },
+    :min => lambda {|*args| args.min },
     :car => lambda {|x| x.car },
     :cdr => lambda {|x| x.cdr },
     :cons => lambda {|x, y| Cons.new(x, y) },
