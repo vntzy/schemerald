@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'schemerald'
-  s.version     = '0.0.3'
+  s.version     = '0.0.4'
   s.date        = '2014-02-05'
   s.summary     = "(scheme? yes no)"
   s.description = "A Scheme interpreter in Ruby"
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
     "lib/schemerald/Interpreter.rb",
     "schemerald.gemspec"
   ]
-  s.homepage    = "http://rubygems.org/gems/schemerald"
+  s.homepage    = "https://github.com/vntzy/schemerald"
   s.license       = 'MIT'
 
   s.add_dependency "sxp", ">= 0.1.5"
