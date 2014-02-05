@@ -12,6 +12,7 @@ class Interpreter
     :cdr => lambda {|x| x.cdr },
     :cons => lambda {|x, y| Cons.new(x, y) },
     :list => lambda {|*args| args.consify },
+    :pair? => lambda {|x| x.is_a?(Cons) ? :"#t" : :"#f" }
   }
   FORMS = {
     :define => lambda {|env, forms, name, value| env.define(name, value.scheme_eval(env, forms)) },
