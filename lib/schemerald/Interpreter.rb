@@ -13,7 +13,19 @@ class Interpreter
     :cons => lambda {|x, y| Cons.new(x, y) },
     :list => lambda {|*args| args.consify },
   }
-  FORMS = {}
+  FORMS = {
+    :define => lambda {|env, forms, name, value| env.define(name, value.scheme_eval(env, forms)) },
+    :set! => lambda {|env, forms, name, value| env.set_value(name, value.scheme_eval(env, forms)) },
+    :quote => lambda {|env, forms, exp| exp },
+    :if => lambda {|env, forms, if_clause, then_clause, else_clause|
+      if if_clause.scheme_eval(env, forms) != :"#f"
+        then_clause.scheme_eval(env, forms)
+      else 
+        else_clause.scheme_eval(env, forms)
+      end
+    },
+    
+  }
   def initialize
     @environment = Environment.new(nil, DEFAULTS)
     @special_forms = Environment.new(nil, FORMS)
