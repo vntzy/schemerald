@@ -24,7 +24,7 @@ class Interpreter
         else_clause.scheme_eval(env, forms)
       end
     },
-    
+    :lambda => lambda {|env, forms, params, *code| Lambda.new(env, forms, params, *code) },
   }
   def initialize
     @environment = Environment.new(nil, DEFAULTS)
