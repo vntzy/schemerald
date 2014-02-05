@@ -1,12 +1,12 @@
 Gem::Specification.new do |s|
   s.name        = 'schemerald'
-  s.version     = '0.0.1'
+  s.version     = '0.0.0'
   s.date        = '2014-02-05'
   s.summary     = "(scheme? yes no)"
   s.description = "A Scheme interpreter in Ruby"
   s.authors     = ["Ventsislav Velkov"]
   s.email       = 'vntzyv@gmail.com'
-  s.files       = [ 
+  s.files       = [
     "README.md",
     "LICENSE.txt",
     "Gemfile",
@@ -20,5 +20,5 @@ Gem::Specification.new do |s|
     "schemerald.gemspec"
   ]
   s.homepage    = "http://rubygems.org/gems/schemerald"
-  s.license       = ["MIT"]
+  s.license       = 'MIT'
 end
