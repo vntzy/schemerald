@@ -7,6 +7,7 @@ class Lambda
   end
 
   def call(*args)
+    raise "arity mismatch: expected #{@parameters.size} arguments" unless args.size == @parameters.size
     new_env = Environment.new(@environment)
     @parameters.zip(args).each do |name, value|
       new_env.define(name, value)
