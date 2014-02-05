@@ -24,6 +24,7 @@ class Interpreter
     :even? => lambda {|x| x.even? ? :"#t" : :"#f" },
     :max => lambda {|*args| args.max },
     :min => lambda {|*args| args.min },
+    :modulo => lambda {|x, y| x.modulo(y) },
     :car => lambda {|x| x.car },
     :cdr => lambda {|x| x.cdr },
     :cons => lambda {|x, y| Cons.new(x, y) },
