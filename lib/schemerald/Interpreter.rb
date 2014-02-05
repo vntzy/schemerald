@@ -1,5 +1,9 @@
 class Interpreter
   DEFAULTS = {
+    :"#t" => :"#t",
+    :"#T" => :"#t",
+    :"#f" => :"#f",
+    :"#F" => :"#f",
     :+ => lambda {|*args| args.reduce(:+) },
     :- => lambda {|*args| args.reduce(:-) },
     :* => lambda {|*args| args.reduce(:*) },
