@@ -22,6 +22,6 @@ class Cons
 
   def to_sxp
     return "(#{car.to_sxp} . #{cdr.to_sxp})" unless list?
-    return "(#{arrayify.map{|x| x.to_sxp}})"
+    return "(#{arrayify.map{|x| x.to_sxp}.join(' ')})"
   end
 end
