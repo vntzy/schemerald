@@ -22,7 +22,11 @@ class Interpreter
   def repl
     print "> "
     STDIN.each_line do |line|
-      puts self.evaluate(line)
+      begin
+        puts self.evaluate(line)
+      rescue StandardError => e
+        puts "ERROR: #{e}"
+      end
       print "> "
     end
   end
