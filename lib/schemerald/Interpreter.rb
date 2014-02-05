@@ -23,7 +23,7 @@ class Interpreter
     print "> "
     STDIN.each_line do |line|
       begin
-        puts self.evaluate(line)
+        puts self.evaluate(line).to_sxp
       rescue StandardError => e
         puts "ERROR: #{e}"
       end
