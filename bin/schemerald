@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
 
+require 'sxp'
 require 'schemerald'
 Interpreter.new.repl
