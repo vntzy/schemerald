@@ -11,6 +11,6 @@ class Lambda
     @parameters.zip(args).each do |name, value|
       new_env.define(name, value)
     end
-    @code.map{|x| x.scheme_eval(new_env, @forms) }
+    @code.map{|x| x.scheme_eval(new_env, @forms) }.last
   end
 end
