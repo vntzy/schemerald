@@ -28,6 +28,11 @@ class Symbol
   def scheme_eval(environment, forms)
     environment.get_value(self)
   end
+
+  def to_sxp
+    return "()" if self == :nil
+    to_s
+  end
 end
 
 class Array
