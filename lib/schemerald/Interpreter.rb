@@ -4,6 +4,9 @@ class Interpreter
     :"#T" => true,
     :"#f" => false,
     :"#F" => false,
+    :and => lambda {|*args| args != [] ? eval(args.join(' and ')) : true },
+    :or => lambda {|*args| args != [] ? eval(args.join(' or ')) : false },
+    :not => lambda {|x| not x },
     :+ => lambda {|*args| args.reduce(:+) },
     :- => lambda {|*args| args.reduce(:-) },
     :* => lambda {|*args| args.reduce(:*) },
@@ -17,11 +20,11 @@ class Interpreter
     :quotient => lambda {|x, y| x / y },
     :remainder => lambda {|x, y| x.remainder(y) },
     :abs => lambda {|x| x.abs },
-    :positive? => lambda {|x| x > 0 ? true : false },
-    :negative? => lambda {|x| x < 0 ? true : false },
-    :zero? => lambda {|x| x == 0 ? true : false },
-    :odd? => lambda {|x| x.odd? ? true : false },
-    :even? => lambda {|x| x.even? ? true : false },
+    :positive? => lambda {|x| x > 0 },
+    :negative? => lambda {|x| x < 0 },
+    :zero? => lambda {|x| x == 0 },
+    :odd? => lambda {|x| x.odd? },
+    :even? => lambda {|x| x.even? },
     :max => lambda {|*args| args.max },
     :min => lambda {|*args| args.min },
     :modulo => lambda {|x, y| x.modulo(y) },
@@ -29,12 +32,16 @@ class Interpreter
     :cdr => lambda {|x| x.cdr },
     :cons => lambda {|x, y| Cons.new(x, y) },
     :list => lambda {|*args| args.consify },
-    :pair? => lambda {|x| x.is_a?(Cons) ? true : true }
+    :pair? => lambda {|x| x.is_a?(Cons) ? true : true },
+    :null? => lambda {|x| x == :nil },
+    :list? => lambda {|x| x.list? },
+    :string? => lambda {|x| x.is_a?(String) },
+    :procedure? => lambda {|x| x.is_a?(Proc) },
   }
   FORMS = {
     :define => lambda {|env, forms, name, value| env.define(name, value.scheme_eval(env, forms)) },
     :set! => lambda {|env, forms, name, value| env.set_value(name, value.scheme_eval(env, forms)) },
-    :quote => lambda {|env, forms, exp| exp },
+    :quote => lambda {|env, forms, exp| exp == :nil ? nil : exp },
     :if => lambda {|env, forms, if_clause, then_clause, else_clause|
       if if_clause.scheme_eval(env, forms) != false
         then_clause.scheme_eval(env, forms)
@@ -43,6 +50,7 @@ class Interpreter
       end
     },
     :lambda => lambda {|env, forms, params, *code| Lambda.new(env, forms, params, *code) },
+    :apply => lambda {|env, forms, func, list| Cons.new(func, list.scheme_eval(env, forms)).scheme_eval(env, forms) },
   }
   def initialize
     @environment = Environment.new(nil, DEFAULTS)
