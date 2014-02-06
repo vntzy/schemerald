@@ -1,9 +1,9 @@
 class Interpreter
   DEFAULTS = {
-    :"#t" => :"#t",
-    :"#T" => :"#t",
-    :"#f" => :"#f",
-    :"#F" => :"#f",
+    :"#t" => true,
+    :"#T" => true,
+    :"#f" => false,
+    :"#F" => false,
     :+ => lambda {|*args| args.reduce(:+) },
     :- => lambda {|*args| args.reduce(:-) },
     :* => lambda {|*args| args.reduce(:*) },
@@ -17,11 +17,11 @@ class Interpreter
     :quotient => lambda {|x, y| x / y },
     :remainder => lambda {|x, y| x.remainder(y) },
     :abs => lambda {|x| x.abs },
-    :positive? => lambda {|x| x > 0 ? :"#t" : :"#f" },
-    :negative? => lambda {|x| x < 0 ? :"#t" : :"#f" },
-    :zero? => lambda {|x| x == 0 ? :"#t" : :"#f" },
-    :odd? => lambda {|x| x.odd? ? :"#t" : :"#f" },
-    :even? => lambda {|x| x.even? ? :"#t" : :"#f" },
+    :positive? => lambda {|x| x > 0 ? true : false },
+    :negative? => lambda {|x| x < 0 ? true : false },
+    :zero? => lambda {|x| x == 0 ? true : false },
+    :odd? => lambda {|x| x.odd? ? true : false },
+    :even? => lambda {|x| x.even? ? true : false },
     :max => lambda {|*args| args.max },
     :min => lambda {|*args| args.min },
     :modulo => lambda {|x, y| x.modulo(y) },
@@ -29,14 +29,14 @@ class Interpreter
     :cdr => lambda {|x| x.cdr },
     :cons => lambda {|x, y| Cons.new(x, y) },
     :list => lambda {|*args| args.consify },
-    :pair? => lambda {|x| x.is_a?(Cons) ? :"#t" : :"#f" }
+    :pair? => lambda {|x| x.is_a?(Cons) ? true : true }
   }
   FORMS = {
     :define => lambda {|env, forms, name, value| env.define(name, value.scheme_eval(env, forms)) },
     :set! => lambda {|env, forms, name, value| env.set_value(name, value.scheme_eval(env, forms)) },
     :quote => lambda {|env, forms, exp| exp },
     :if => lambda {|env, forms, if_clause, then_clause, else_clause|
-      if if_clause.scheme_eval(env, forms) != :"#f"
+      if if_clause.scheme_eval(env, forms) != false
         then_clause.scheme_eval(env, forms)
       else 
         else_clause.scheme_eval(env, forms)
