@@ -1,9 +1,5 @@
 class Interpreter
   DEFAULTS = {
-    :"#t" => true,
-    :"#T" => true,
-    :"#f" => false,
-    :"#F" => false,
     :and => lambda {|*args| args != [] ? eval(args.join(' and ')) : true },
     :or => lambda {|*args| args != [] ? eval(args.join(' or ')) : false },
     :not => lambda {|x| not x },
@@ -38,6 +34,7 @@ class Interpreter
     :string? => lambda {|x| x.is_a?(String) },
     :procedure? => lambda {|x| x.is_a?(Proc) },
   }
+
   FORMS = {
     :define => lambda {|env, forms, name, value| env.define(name, value.scheme_eval(env, forms)) },
     :set! => lambda {|env, forms, name, value| env.set_value(name, value.scheme_eval(env, forms)) },
@@ -52,13 +49,14 @@ class Interpreter
     :lambda => lambda {|env, forms, params, *code| Lambda.new(env, forms, params, *code) },
     :apply => lambda {|env, forms, func, list| Cons.new(func, list.scheme_eval(env, forms)).scheme_eval(env, forms) },
   }
+
   def initialize
     @environment = Environment.new(nil, DEFAULTS)
     @special_forms = Environment.new(nil, FORMS)
   end
 
   def evaluate(string)
-    SXP.parse(string).consify.scheme_eval(@environment, @special_forms)
+    SXP::Reader::Scheme.read(string).consify.scheme_eval(@environment, @special_forms)
   end
 
   def repl
