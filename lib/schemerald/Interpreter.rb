@@ -42,7 +42,7 @@ class Interpreter
     :if => lambda {|env, forms, if_clause, then_clause, else_clause|
       if if_clause.scheme_eval(env, forms) != false
         then_clause.scheme_eval(env, forms)
-      else 
+      else
         else_clause.scheme_eval(env, forms)
       end
     },
@@ -56,14 +56,14 @@ class Interpreter
   end
 
   def evaluate(string)
-    SXP::Reader::Scheme.read(string).consify.scheme_eval(@environment, @special_forms)
+    SXP::Reader::Scheme.read("(#{string})").map{|x| x.consify.scheme_eval(@environment, @special_forms) }
   end
 
   def repl
     print "> "
     STDIN.each_line do |line|
       begin
-        puts self.evaluate(line).to_sxp
+        self.evaluate(line).each{|exp| puts exp.to_sxp }
       rescue StandardError => e
         puts "ERROR: #{e}"
       end
