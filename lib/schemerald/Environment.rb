@@ -21,7 +21,7 @@ class Environment
     elsif @parent.nil?
       raise "There isn't a definition of #{symbol} to set to #{value}"
     else
-      @parent.set(symbol, value)
+      @parent.set_value(symbol, value)
     end
   end
 
