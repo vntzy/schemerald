@@ -54,6 +54,15 @@ class Interpreter
     },
     :lambda => lambda {|env, forms, params, *code| Lambda.new(env, forms, params, *code) },
     :apply => lambda {|env, forms, func, list| Cons.new(func, list.scheme_eval(env, forms)).scheme_eval(env, forms) },
+    :let => lambda {|env, forms, bindings, body|
+      params, values = [], []
+      while bindings != :nil do
+        params << bindings.car.car
+        values << bindings.car.cdr.car
+        bindings = bindings.cdr
+      end
+      Lambda.new(env, forms, params, body).call(*values.map{|value| value.scheme_eval(env, forms) })
+    },
   }
 
   def initialize
