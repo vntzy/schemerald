@@ -36,7 +36,13 @@ class Interpreter
   }
 
   FORMS = {
-    :define => lambda {|env, forms, name, value| env.define(name, value.scheme_eval(env, forms)) },
+    :define => lambda {|env, forms, params, value|
+      if params.list?
+        env.define(params.car, Lambda.new(env, forms, params.cdr, value))
+      else
+        env.define(params, value.scheme_eval(env, forms))
+      end
+    },
     :set! => lambda {|env, forms, name, value| env.set_value(name, value.scheme_eval(env, forms)) },
     :quote => lambda {|env, forms, exp| exp == :nil ? nil : exp },
     :if => lambda {|env, forms, if_clause, then_clause, else_clause|
