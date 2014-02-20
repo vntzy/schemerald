@@ -50,7 +50,7 @@ class Interpreter
     :null? => lambda {|x| x == :nil },
     :list? => lambda {|x| x.list? },
 #Symbol library:
-    :symbol? => lambda {|x| x.is_a? Symbol },
+    :symbol? => lambda {|x| x.is_a? Symbol and x != :nil },
 #String library:
     :string? => lambda {|x| x.is_a? String },
 #Control features:
