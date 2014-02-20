@@ -1,8 +1,11 @@
 class Interpreter
   DEFAULTS = {
+#Boolean library:
     :and => lambda {|*args| args != [] ? eval(args.join(' and ')) : true },
     :or => lambda {|*args| args != [] ? eval(args.join(' or ')) : false },
     :not => lambda {|x| not x },
+    :boolean? => lambda {|x| x == true or x == false },
+#Numeric library:
     :+ => lambda {|*args| args.reduce(:+) },
     :- => lambda {|*args| args.reduce(:-) },
     :* => lambda {|*args| args.reduce(:*) },
@@ -13,14 +16,6 @@ class Interpreter
         args.map{|x| x.to_r }.reduce(:/)
       end
     },
-    :"=" => lambda {|*args| args.all?{|x| x == args.first }},
-    :> => lambda {|*args| args.each_with_object([1]){|i, a| a << ( a.last > i) << i }.drop(2).all? },
-    :< => lambda {|*args| args.each_with_object([1]){|i, a| a << ( a.last < i) << i }.drop(2).all? },
-    :>= => lambda {|*args| args.each_with_object([1]){|i, a| a << ( a.last >= i) << i }.drop(2).all? },
-    :<= => lambda {|*args| args.each_with_object([1]){|i, a| a << ( a.last <= i) << i }.drop(2).all? },
-    :eq? => lambda {|x, y| x.eql? y },
-    :eqv? => lambda {|x, y| x == y },
-    :equal? => lambda {|x, y| x.eql? y },
     :quotient => lambda {|x, y| x / y },
     :remainder => lambda {|x, y| x.remainder(y) },
     :abs => lambda {|x| x.abs },
@@ -32,6 +27,21 @@ class Interpreter
     :max => lambda {|*args| args.max },
     :min => lambda {|*args| args.min },
     :modulo => lambda {|x, y| x.modulo(y) },
+    :number? => lambda {|x| x.is_a? Numeric },
+    :complex? => lambda {|x| x.is_a? Complex },
+    :real? => lambda {|x| x.is_a? Float },
+    :rational? => lambda {|x| x.is_a? Rational },
+    :integer? => lambda {|x| x.is_a? Integer },
+    :"=" => lambda {|*args| args.all?{|x| x == args.first }},
+    :> => lambda {|*args| args.each_with_object([1]){|i, a| a << ( a.last > i) << i }.drop(2).all? },
+    :< => lambda {|*args| args.each_with_object([1]){|i, a| a << ( a.last < i) << i }.drop(2).all? },
+    :>= => lambda {|*args| args.each_with_object([1]){|i, a| a << ( a.last >= i) << i }.drop(2).all? },
+    :<= => lambda {|*args| args.each_with_object([1]){|i, a| a << ( a.last <= i) << i }.drop(2).all? },
+#Equivalance predicates:
+    :eq? => lambda {|x, y| x.eql? y },
+    :eqv? => lambda {|x, y| x == y },
+    :equal? => lambda {|x, y| x.eql? y },
+#List library:
     :car => lambda {|x| x.car },
     :cdr => lambda {|x| x.cdr },
     :cons => lambda {|x, y| Cons.new(x, y) },
@@ -39,8 +49,12 @@ class Interpreter
     :pair? => lambda {|x| x.is_a?(Cons) ? true : true },
     :null? => lambda {|x| x == :nil },
     :list? => lambda {|x| x.list? },
-    :string? => lambda {|x| x.is_a?(String) },
-    :procedure? => lambda {|x| x.is_a?(Proc) },
+#Symbol library:
+    :symbol? => lambda {|x| x.is_a? Symbol },
+#String library:
+    :string? => lambda {|x| x.is_a? String },
+#Control features:
+    :procedure? => lambda {|x| x.is_a? Proc },
   }
 
   FORMS = {
