@@ -40,3 +40,9 @@ class Array
     map { |x| x.consify }.reverse.reduce(:nil) { |cdr, car| Cons.new(car, cdr) }
   end
 end
+
+class NilClass
+  def to_sxp
+    :unspecified
+  end
+end

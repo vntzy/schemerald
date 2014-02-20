@@ -62,6 +62,15 @@ class Interpreter
         else_clause.scheme_eval(env, forms)
       end
     },
+    :cond => lambda {|env, forms, *clauses|
+      found_clause = clauses.find {|x| x.car == :else or x.car.scheme_eval(env, forms) }
+      if found_clause
+        found_clause.cdr.arrayify.map{|x| x.scheme_eval(env, forms) }.last or
+        found_clause.car.scheme_eval(env, forms)
+      else
+        nil
+      end
+    },
     :lambda => lambda {|env, forms, params, *code| Lambda.new(env, forms, params, *code) },
     :apply => lambda {|env, forms, func, list| Cons.new(func, list.scheme_eval(env, forms)).scheme_eval(env, forms) },
     :let => lambda {|env, forms, bindings, body|
