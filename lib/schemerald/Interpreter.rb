@@ -13,6 +13,14 @@ class Interpreter
         args.map{|x| x.to_r }.reduce(:/)
       end
     },
+    :"=" => lambda {|*args| args.all?{|x| x == args.first }},
+    :> => lambda {|*args| args.each_with_object([1]){|i, a| a << ( a.last > i) << i }.drop(2).all? },
+    :< => lambda {|*args| args.each_with_object([1]){|i, a| a << ( a.last < i) << i }.drop(2).all? },
+    :>= => lambda {|*args| args.each_with_object([1]){|i, a| a << ( a.last >= i) << i }.drop(2).all? },
+    :<= => lambda {|*args| args.each_with_object([1]){|i, a| a << ( a.last <= i) << i }.drop(2).all? },
+    :eq? => lambda {|x, y| x.eql? y },
+    :eqv? => lambda {|x, y| x == y },
+    :equal? => lambda {|x, y| x.eql? y },
     :quotient => lambda {|x, y| x / y },
     :remainder => lambda {|x, y| x.remainder(y) },
     :abs => lambda {|x| x.abs },
@@ -44,7 +52,9 @@ class Interpreter
       end
     },
     :set! => lambda {|env, forms, name, value| env.set_value(name, value.scheme_eval(env, forms)) },
-    :quote => lambda {|env, forms, exp| exp == :nil ? nil : exp },
+    :"set-car!" => lambda {|env, forms, list, obj| env.set_value(list, Cons.new(obj.scheme_eval(env, forms), env.get_value(list).cdr)) }, #testme
+    :"set-cdr!" => lambda {|env, forms, list, obj| env.set_value(list, Cons.new(env.get_value(list).car, obj.scheme_eval(env, forms))) }, #testme
+    :quote => lambda {|env, forms, exp| exp },
     :if => lambda {|env, forms, if_clause, then_clause, else_clause|
       if if_clause.scheme_eval(env, forms) != false
         then_clause.scheme_eval(env, forms)
