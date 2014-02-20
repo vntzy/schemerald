@@ -51,9 +51,15 @@ class Interpreter
         env.define(params, value.scheme_eval(env, forms))
       end
     },
-    :set! => lambda {|env, forms, name, value| env.set_value(name, value.scheme_eval(env, forms)) },
-    :"set-car!" => lambda {|env, forms, list, obj| env.set_value(list, Cons.new(obj.scheme_eval(env, forms), env.get_value(list).cdr)) }, #testme
-    :"set-cdr!" => lambda {|env, forms, list, obj| env.set_value(list, Cons.new(env.get_value(list).car, obj.scheme_eval(env, forms))) }, #testme
+    :set! => lambda {|env, forms, name, value|
+      env.set_value(name, value.scheme_eval(env, forms))
+    },
+    :"set-car!" => lambda {|env, forms, list, obj|
+      env.set_value(list, Cons.new(obj.scheme_eval(env, forms), env.get_value(list).cdr))
+    },
+    :"set-cdr!" => lambda {|env, forms, list, obj|
+      env.set_value(list, Cons.new(env.get_value(list).car, obj.scheme_eval(env, forms)))
+    },
     :quote => lambda {|env, forms, exp| exp },
     :if => lambda {|env, forms, if_clause, then_clause, else_clause|
       if if_clause.scheme_eval(env, forms) != false
@@ -71,8 +77,12 @@ class Interpreter
         nil
       end
     },
-    :lambda => lambda {|env, forms, params, *code| Lambda.new(env, forms, params, *code) },
-    :apply => lambda {|env, forms, func, list| Cons.new(func, list.scheme_eval(env, forms)).scheme_eval(env, forms) },
+    :lambda => lambda {|env, forms, params, *code|
+      Lambda.new(env, forms, params, *code)
+    },
+    :apply => lambda {|env, forms, func, list|
+      Cons.new(func, list.scheme_eval(env, forms)).scheme_eval(env, forms)
+    },
     :let => lambda {|env, forms, bindings, body|
       params, values = [], []
       while bindings != :nil do
