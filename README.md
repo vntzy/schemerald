@@ -1,7 +1,7 @@
 schemerald
 =======================
 
-An implementation of the Scheme R5RS interpreter I wrote in Ruby
+Schemerald is a Scheme R5RS interpreter written in Ruby.
 
 Features
 =======================
@@ -40,6 +40,10 @@ Installation
 To start a REPL session:
 
 <tt> Interpreter.new.repl  </tt>
+
+To exit a REPL session:
+
+<tt> exit  </tt>
 
 Licence
 =======================
