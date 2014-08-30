@@ -19,7 +19,8 @@ class Environment
     if @defaults.has_key?(symbol)
       @defaults[symbol] = value
     elsif @parent.nil?
-      raise SchemeError, "assignment disallowed;\ncannot set undefined\nvariable: #{symbol}"
+      raise SchemeError,
+        "assignment disallowed;\ncannot set undefined\nvariable: #{symbol}"
     else
       @parent.set_value(symbol, value)
     end
@@ -27,7 +28,8 @@ class Environment
 
   def get_value(symbol)
     return @defaults[symbol] if @defaults.has_key?(symbol)
-    raise SchemeError, "#{symbol}: undefined;\nCannot reference undefined identifier" if @parent.nil?
+    raise SchemeError,
+      "#{symbol}: undefined;\nCannot reference undefined identifier" if @parent.nil?
     return @parent.get_value(symbol)
   end
 end

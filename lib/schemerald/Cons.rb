@@ -16,8 +16,10 @@ class Cons
   end
 
   def scheme_eval(environment, forms)
-    return forms.get_value(car).call(environment, forms, *cdr.arrayify) if forms.defined?(car)
-    return car.scheme_eval(environment, forms).call(*cdr.arrayify.map{|x| x.scheme_eval(environment, forms)})
+    return forms.get_value(car).
+      call(environment, forms, *cdr.arrayify) if forms.defined?(car)
+    return car.scheme_eval(environment, forms).
+      call(*cdr.arrayify.map{|x| x.scheme_eval(environment, forms)})
   end
 
   def to_sxp

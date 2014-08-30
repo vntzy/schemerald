@@ -46,7 +46,8 @@ class Interpreter
         values << bindings.car.cdr.car
         bindings = bindings.cdr
       end
-      Lambda.new(env, forms, params, body).call(*values.map{|value| value.scheme_eval(env, forms) })
+      Lambda.new(env, forms, params, body).
+        call(*values.map{|value| value.scheme_eval(env, forms) })
     },
   }
 end

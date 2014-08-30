@@ -5,7 +5,8 @@ class Interpreter
   end
 
   def evaluate(string)
-    SXP::Reader::Scheme.read("(#{string})").map{|x| x.consify.scheme_eval(@environment, @special_forms) }
+    SXP::Reader::Scheme.read("(#{string})").
+      map{|x| x.consify.scheme_eval(@environment, @special_forms) }
   end
 
   def scheme_print(output)
