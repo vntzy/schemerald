@@ -49,5 +49,22 @@ class Interpreter
       Lambda.new(env, forms, params, body).
         call(*values.map{|value| value.scheme_eval(env, forms) })
     },
+    :eval => lambda {|env, forms, *code|
+      code.map{|c| c.scheme_eval(env, forms)}.map{|c| c.scheme_eval(env, forms) }.last
+    },
+    :"define-syntax" => lambda {|env, forms, name, exp|
+      func = exp.scheme_eval(env, forms)
+      forms.define(name, lambda{|env2, forms2, *rest|
+        func.call(*rest).scheme_eval(env, forms) })
+      name
+    },
+    :"let-syntax" => lambda{|env, forms, binding, body|
+      name = binding.car
+      func = binding.cdr.car.scheme_eval(env, forms)
+      newforms = Environment.new(forms)
+      newforms.define(name, lambda{|env2, forms2, *rest| func.call(*rest).
+        scheme_eval(env, forms)})
+      body.scheme_eval(env, newforms)
+    },
   }
 end
