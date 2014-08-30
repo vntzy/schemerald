@@ -43,7 +43,7 @@ To start a REPL session:
 
 To exit a REPL session:
 
-<tt> exit  </tt>
+<tt> > exit  </tt>
 
 Licence
 =======================
