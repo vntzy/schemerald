@@ -13,6 +13,8 @@ class Interpreter
     STDIN.each_line do |line|
       begin
         self.evaluate(line).each{|exp| puts exp.to_sxp }
+      rescue SchemeError => e
+        puts "SchemeError: #{e}"
       rescue StandardError => e
         puts "ERROR: #{e}"
       end
