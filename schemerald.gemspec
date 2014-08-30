@@ -28,5 +28,6 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/vntzy/schemerald"
   s.license       = 'MIT'
 
-  s.add_runtime_dependency 'sxp', '>= 0.1.5'
+  s.add_runtime_dependency 'sxp', '~> 0.1', '>= 0.1.5'
+  s.add_runtime_dependency "oyster", '~> 0.9', '>= 0.9.5'
 end
