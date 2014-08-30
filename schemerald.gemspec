@@ -1,7 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'schemerald'
-  s.version     = '0.0.4'
-  s.date        = '2014-02-05'
+  s.version     = '0.0.5'
   s.summary     = "(scheme? yes no)"
   s.description = "A Scheme interpreter in Ruby"
   s.authors     = ["Ventsislav Velkov"]
@@ -14,9 +13,16 @@ Gem::Specification.new do |s|
     "lib/schemerald.rb",
     "lib/schemerald/Cons.rb",
     "lib/schemerald/Environment.rb",
-    "lib/schemerald/monkey_patching.rb",
     "lib/schemerald/Lambda.rb",
-    "lib/schemerald/Interpreter.rb",
+    "lib/schemerald/Interpreter/Interpreter.rb",
+    "lib/schemerald/Interpreter/defaults.rb",
+    "lib/schemerald/Interpreter/special_forms.rb",
+    "lib/schemerald/Exceptions/SchemeError.rb",
+    "lib/schemerald/monkey_patching/Object.rb",
+    "lib/schemerald/monkey_patching/Array.rb",
+    "lib/schemerald/monkey_patching/Object.rb",
+    "lib/schemerald/monkey_patching/Symbol.rb",
+    "lib/schemerald/monkey_patching/NilClass.rb",
     "schemerald.gemspec"
   ]
   s.homepage    = "https://github.com/vntzy/schemerald"
