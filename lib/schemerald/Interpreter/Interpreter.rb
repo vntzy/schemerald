@@ -8,11 +8,16 @@ class Interpreter
     SXP::Reader::Scheme.read("(#{string})").map{|x| x.consify.scheme_eval(@environment, @special_forms) }
   end
 
+  def scheme_print(output)
+    output.each{|exp| puts exp.to_sxp }
+  end
+
   def repl
     print "> "
     STDIN.each_line do |line|
       begin
-        self.evaluate(line).each{|exp| puts exp.to_sxp }
+        return if line.start_with? "exit"
+        scheme_print(evaluate(line))
       rescue SchemeError => e
         puts "SchemeError: #{e}"
       rescue StandardError => e
