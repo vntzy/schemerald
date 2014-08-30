@@ -1,0 +1,2 @@
+class SchemeError < StandardError
+end
