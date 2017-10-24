@@ -1,3 +1,4 @@
+# the most basic abstraction in lisp
 class Cons
   attr_reader :car, :cdr
 
