@@ -1,7 +1,7 @@
 schemerald
 =======================
 
-Schemerald is a Scheme R5RS interpreter written in Ruby.
+Schemerald is a Scheme R5RS interpreter written in Ruby. 
 
 Features
 =======================
